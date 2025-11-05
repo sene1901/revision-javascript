@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Système de notes</title>
+</head>
+<body>
+  <h2>Exercice : Système de notes</h2>
+  <input type="number" placeholder="Donner une note" id="nbre">
+  <button id="ajouter">Ajouter la note</button>
+  <p id="resultat"></p>
+
+  <script>
+    const notes = [];
+    const input = document.getElementById('nbre');
+    const resultat = document.getElementById('resultat');
+    const bouton = document.getElementById('ajouter');
+
+    bouton.addEventListener('click', () => {
+      const note = parseFloat(input.value);
+
+      if (isNaN(note) || note < 0 || note > 20) {
+        alert("Veuillez entrer un nombre entre 0 et 20 !");
+        input.value = '';
+        input.focus();
+        return;
+      }
+
+      notes.push(note);
+      input.value = '';
+      input.focus();
+
+      if (notes.length < 5) {
+        resultat.innerText = `Vous avez saisi ${notes.length} note(s).`;
+      } else {
+        // Calcul de la moyenne
+        const somme = notes.reduce((acc, val) => acc + val, 0);
+        const moyenne = somme / notes.length;
+
+        let message = "";
+        if (moyenne >= 10) {
+          message = `Moyenne : ${moyenne.toFixed(2)} => Admis`;
+        } else if (moyenne >= 8) {
+          message = `Moyenne : ${moyenne.toFixed(2)} => Rattrapage`;
+        } else {
+          message = `Moyenne : ${moyenne.toFixed(2)} => Échec`;
+        }
+
+        resultat.innerText = message;
+        input.disabled = true;
+        bouton.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>

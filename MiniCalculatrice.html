@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> mini Calculatrice</title>
+</head>
+<body>
+    <h1>mini Calculatrice</h1>
+    <p id="resultat"></p>
+    <script>
+// let n1 = parseFloat(prompt("Premier nombre :"));
+// let op = prompt("Opérateur (+, -, *, /, %) :");
+// let n2 = parseFloat(prompt("Deuxième nombre :"));
+// let resultat;
+
+// if (op === "+") {
+//   resultat = n1 + n2;
+// } else if (op === "-") {
+//   resultat = n1 - n2;
+// } else if (op === "*") {
+//   resultat = n1 * n2;
+// } else if (op === "/") {
+//   resultat = n1 / n2;
+// } else if (op === "%") {
+//   resultat = n1 % n2;
+// } else {
+//   resultat = " Opérateur invalide";
+// }
+
+// document.write("Résultat : " + resultat);
+let n1 = parseFloat(prompt("Premier nombre :"));
+let op = prompt("Opérateur (+, -, *, /, %) :");
+let n2 = parseFloat(prompt("Deuxième nombre :"));
+let resultat ;
+
+switch (op) {
+  case "+":
+    resultat = n1 + n2;
+    break;
+
+  case "-":
+    resultat = n1 - n2;
+    break;
+
+  case "*":
+    resultat = n1 * n2;
+    break;
+
+  case "/":
+    resultat = n1 / n2;
+    break;
+
+  case "%":
+    resultat = n1 % n2;
+    break;
+
+  default:
+    resultat = "Opérateur invalide";
+}
+document.getElementById("resultat").innerHTML = "Résultat : " + resultat;
+// document.write("Résultat : " + resultat);
+
+
+    </script>
+</body>
+</html>

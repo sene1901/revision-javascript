@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gestion exception</title>
+</head>
+<body>
+    <h1>Vérifié que le champ nom n’était pas vide.<br> Utilisons maintenant try / catch et throw pour gérer ces erreurs :</h1>
+    <script>
+        function verifierChamp(champ) {
+    // Si le champ est vide, on lance une exception
+    if (champ.value === "") {
+        throw new Error(`Le champ ${champ.id} est vide`)
+    }
+}
+    </script>
+</body>
+</html>

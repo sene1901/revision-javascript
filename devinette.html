@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script >
+        // une seule essai
+//         const secret = Math.floor(Math.random() * 10) + 1;
+// let essai = parseInt(prompt("Devine le nombre entre 1 et 10 :"));
+
+// if (essai === secret) {
+//   alert("Bravo  Tu as trouvé !");
+// } else {
+//   alert("Raté  Le nombre était " + secret);
+// }
+
+
+
+//plusieurs essai
+
+const secret = Math.floor(Math.random() * 10) + 1;
+let essai;
+let essaisRestants = 3;
+
+while (essai !== secret && essaisRestants > 0) {
+  essai = parseInt(prompt(`Devine le nombre entre 1 et 10 (${essaisRestants} essais restants)`));
+  
+  if (isNaN(essai) || essai < 1 || essai > 10) {
+    alert("Merci de saisir un nombre entre 1 et 10 !");
+    continue;
+  }
+
+  if (essai === secret) {
+    alert("Bravo  Tu as trouvé !");
+    break;
+  } else {
+    essaisRestants--;
+    let indice = essai < secret ? "plus grand" : "plus petit";
+    alert(`Raté  Essaie un nombre ${indice}.`);
+  }
+}
+
+if (essaisRestants === 0 && essai !== secret) {
+  alert("  Le nombre était " + secret);
+}
+
+
+    </script>
+</body>
+</html>

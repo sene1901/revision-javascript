@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Liste des utilisateurs Firebase</title>
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+</head>
+<body class="bg-light">
+
+ <div class="container mt-5">
+    <div class="card shadow p-4 mx-auto" style="max-width: 500px;">
+      <h3 class="text-center mb-3">Inscription</h3>
+
+      <form id="signupForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nom complet</label>
+          <input type="text" id="name" class="form-control" placeholder="Ex: Sadio Sène" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Adresse email</label>
+          <input type="email" id="email" class="form-control" placeholder="exemple@email.com" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Mot de passe</label>
+          <input type="password" id="password" class="form-control" placeholder="Minimum 6 caractères" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirmer mot de passe</label>
+          <input type="password" id="confirmPassword" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+      </form>
+
+      <div id="message" class="mt-3 text-center"></div>
+    </div>
+  </div>
+
+
+  <div class="container py-5">
+     <h2 class="text-center mb-4"> Liste des utilisateurs Firestore</h2>
+    <div class="row  justify-content-center ">
+        <div class="col-md-8">
+    <!-- Tableau Bootstrap -->
+    <div class="card border-0 shadow">
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>Nom complet</th>
+              <th>Email</th>
+              <th>Date d'inscription</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr>
+              <td colspan="3" class="text-center text-muted">Chargement...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+</div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    
+
+    //  Configuration Firebase (remplace par la tienne)
+
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+  import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import { getFirestore,collection, doc, setDoc,getDocs , serverTimestamp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCfWgmp-EYvCohAYkNyru6vKhnN28Nwjmk",
+    authDomain: "valideform.firebaseapp.com",
+    projectId: "valideform",
+    storageBucket: "valideform.firebasestorage.app",
+    messagingSenderId: "660179163976",
+    appId: "1:660179163976:web:3cd320500a3c111c69b17d",
+    measurementId: "G-77N70FCMR0"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+       const db = getFirestore(app);
+
+ //  Gestion du formulaire
+    const form = document.getElementById("signupForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      message.textContent = "";
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      // Validation
+      if (password !== confirmPassword) {
+        message.innerHTML = `<div class="alert alert-danger">Les mots de passe ne correspondent pas.</div>`;
+        return;
+      }
+      if (password.length < 6) {
+        message.innerHTML = `<div class="alert alert-danger">Le mot de passe doit contenir au moins 6 caractères.</div>`;
+        return;
+      }
+
+      try {
+        //  1. Création du compte Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        //  2. Mettre à jour le profil utilisateur
+        await updateProfile(user, { displayName: name });
+
+        //  3. Enregistrer les infos dans Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          name: name,
+          email: email,
+          createdAt: serverTimestamp()
+        });
+
+        message.innerHTML = `<div class="alert alert-success">Inscription réussie ! Bienvenue ${name} </div>`;
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        let msg = "Une erreur est survenue.";
+        if (error.code === "auth/email-already-in-use") msg = "Cet email est déjà utilisé.";
+        else if (error.code === "auth/invalid-email") msg = "Adresse email invalide.";
+        else if (error.code === "auth/weak-password") msg = "Mot de passe trop faible.";
+        message.innerHTML = `<div class="alert alert-danger">${msg}</div>`;
+      }
+    });
+   
+
+    //  Fonction pour récupérer les utilisateurs
+    async function loadUsers() {
+      const tableBody = document.getElementById("usersTableBody");
+      tableBody.innerHTML = `<tr><td colspan="3" class="text-center text-muted">Chargement...</td></tr>`;
+
+      try {
+        const usersSnapshot = await getDocs(collection(db, "users"));
+        if (usersSnapshot.empty) {
+          tableBody.innerHTML = `<tr><td colspan="3" class="text-center text-muted">Aucun utilisateur trouvé.</td></tr>`;
+          return;
+        }
+
+        let rows = "";
+        usersSnapshot.forEach((doc) => {
+          const user = doc.data();
+          const date = user.createdAt?.toDate
+            ? user.createdAt.toDate().toLocaleDateString()
+            : "Non définie";
+
+          rows += `
+            <tr>
+              <td>${user.name || "—"}</td>
+              <td>${user.email || "—"}</td>
+              <td>${date}</td>
+            </tr>
+          `;
+        });
+
+        tableBody.innerHTML = rows;
+      } catch (error) {
+        console.error("Erreur lors du chargement :", error);
+        tableBody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">Erreur de chargement des utilisateurs.</td></tr>`;
+      }
+    }
+
+    // Charger la liste dès que la page s’ouvre
+    loadUsers();
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

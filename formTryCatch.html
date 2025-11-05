@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulaire avec try...catch</title>
+</head>
+<body>
+  <h2>Formulaire d'inscription</h2>
+
+  <form id="formulaire">
+    <input type="text" id="nom" placeholder="Nom"><br><br>
+    <input type="email" id="email" placeholder="Email"><br><br>
+    <input type="password" id="motdepasse" placeholder="Mot de passe"><br><br>
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <p id="message" style="color: red;"></p>
+
+  <script>
+    const form = document.getElementById("formulaire");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault(); // Empêche le rechargement de la page
+      message.textContent = ""; // Réinitialise le message
+
+      try {
+        const nom = document.getElementById("nom").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const motdepasse = document.getElementById("motdepasse").value.trim();
+
+        // Vérifications de base
+        if (!nom || !email || !motdepasse) {
+          throw new Error("Tous les champs sont vides!");
+        }
+
+        // Vérifie le format de l'email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          throw new Error("Email invalide !");
+        }
+
+        // Vérifie la force du mot de passe
+        const motdepasseRegex = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
+        if (!motdepasseRegex.test(motdepasse)) {
+          throw new Error("Le mot de passe doit contenir au moins 6 caractères, avec lettres et chiffres !");
+        }
+
+
+ // --- Si tout est bon, on stocke dans localStorage ---
+        const utilisateur = {
+          nom: nom,
+          email: email,
+          motdepasse: motdepasse
+        };
+
+        // Récupérer les anciens utilisateurs (s'il y en a)
+        const anciensUtilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+
+        // Ajouter le nouveau
+        anciensUtilisateurs.push(utilisateur);
+
+        // Enregistrer dans localStorage
+        localStorage.setItem("utilisateurs", JSON.stringify(anciensUtilisateurs));
+
+        // Message de succès
+        message.style.color = "green";
+        message.textContent = "✅ Formulaire valide et enregistré dans le localStorage !";
+
+        // Réinitialiser le formulaire
+        form.reset();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Si tout est bon
+        message.style.color = "green";
+        message.textContent = "Formulaire valide ";
+
+      } catch (erreur) {
+        // Capture et affiche le message d'erreur
+        message.style.color = "red";
+        message.textContent = erreur.message;
+      } finally {
+        console.log("Validation terminée."); // Toujours exécuté
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcul d'âge</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    fieldset {
+      width: 350px;
+      padding: 20px;
+      border: 2px solid olive;
+      border-radius: 8px;
+    }
+    legend {
+      color: olive;
+      font-weight: bold;
+    }
+    input {
+      margin: 5px 0;
+      padding: 5px;
+      width: 90%;
+    }
+    input[readonly] {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <fieldset>
+    <legend>Calcul d'âge</legend>
+    
+    <label for="dateNaissance">Date de naissance :</label><br>
+    <input type="date" id="dateNaissance"><br><br>
+
+    <input type="button" value="Calculez votre âge" onclick="calculerAge()"><br><br>
+
+    <label>Votre âge en ans :</label><br>
+    <input type="text" id="ageSimple" readonly><br>
+
+    <label>Votre âge complet :</label><br>
+    <input type="text" id="ageComplet" readonly><br>
+  </fieldset>
+
+  <script>
+    function calculerAge() {
+      const dateNaissance = new Date(document.getElementById("dateNaissance").value);
+      if (isNaN(dateNaissance)) {
+        alert("Veuillez entrer une date de naissance valide !");
+        return;
+      }
+
+      const aujourdHui = new Date();
+      let ageAnnees = aujourdHui.getFullYear() - dateNaissance.getFullYear();
+      let ageMois = aujourdHui.getMonth() - dateNaissance.getMonth();
+      let ageJours = aujourdHui.getDate() - dateNaissance.getDate();
+
+      // Ajustement des mois et jours négatifs
+      if (ageJours < 0) {
+        ageMois--;
+        const dernierJourMoisPrecedent = new Date(aujourdHui.getFullYear(), aujourdHui.getMonth(), 0).getDate();
+        ageJours += dernierJourMoisPrecedent;
+      }
+      if (ageMois < 0) {
+        ageAnnees--;
+        ageMois += 12;
+      }
+
+      // Affichage dans les champs
+      document.getElementById("ageSimple").value = ageAnnees;
+      document.getElementById("ageComplet").value = `${ageAnnees} ans ${ageMois} mois`;
+    }
+  </script>
+
+</body>
+</html>

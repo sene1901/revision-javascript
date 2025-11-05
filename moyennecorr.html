@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcul de Moyenne</title>
+</head>
+<body>
+  <h1>Calcul de la Moyenne des Notes</h1>
+
+  <button id="demarrer">Saisir les notes</button>
+
+  <div id="resultat" style="margin-top:20px; font-size:18px;"></div>
+
+  <script>
+    document.getElementById("demarrer").addEventListener("click", function() {
+      const notes = [];
+      let i = 0;
+
+      while (i < 5) {
+        const noteSaisie = prompt(`Entrez la note ${i + 1} (entre 0 et 20) :`);
+        const note = parseFloat(noteSaisie);
+
+        if (isNaN(note)) {
+          alert("Veuillez entrer un nombre.");
+          continue;
+        }
+
+        if (note < 0 || note > 20) {
+          alert("La note doit être entre 0 et 20.");
+          continue;
+        }
+
+        notes.push(note);
+        i++;
+      }
+
+      // Calcul de la moyenne
+      const somme = notes.reduce((acc, n) => acc + n, 0);
+      const moyenne = somme / notes.length;
+
+      // Détermination du résultat
+      let resultat;
+      if (moyenne >= 10) {
+        resultat = " Admis";
+      } else if (moyenne >= 8) {
+        resultat = " Rattrapage";
+      } else {
+        resultat = " Échec";
+      }
+
+      // Affichage sur la page
+      document.getElementById("resultat").innerHTML = `
+        <p><strong>Notes :</strong> ${notes.join(", ")}</p>
+        <p><strong>Moyenne :</strong> ${moyenne.toFixed(2)}</p>
+        <p><strong>Résultat :</strong> ${resultat}</p>
+      `;
+    });
+  </script>
+</body>
+</html>

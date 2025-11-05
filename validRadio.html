@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <label>Préférence de couleur :</label>
+<input type="radio" id="red" name="couleur" value="red" checked>
+<label for="red">Rouge</label>
+<input type="radio" id="blue" name="couleur" value="blue">
+<label for="blue">Bleu</label>
+<input type="radio" id="green" name="couleur" value="green">
+<label for="green">Vert</label>
+    <script>
+let baliseCouleur = document.querySelectorAll('input[name="couleur"]')
+let couleur = ""
+for (let i = 0; i < baliseCouleur.length; i++) {
+    if (baliseCouleur[i].checked) {
+        couleur = baliseCouleur[i].value
+        break
+    }
+}
+console.log(couleur) // affiche la valeur du radio coché
+    </script>
+</body>
+</html>

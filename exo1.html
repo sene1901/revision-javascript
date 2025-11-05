@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>innerText vs innerHTML vs textContent</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    p { border: 1px solid #ccc; padding: 10px; width: 300px; }
+    button { margin: 5px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <h2>🌐 Exemple DOM</h2>
+  
+  <p id="demo">Bonjour <b>tout le monde</b> ! <span class="hidden">Caché</span></p>
+
+  <button onclick="voirInnerText()">Voir innerText</button>
+  <button onclick="voirInnerHTML()">Voir innerHTML</button>
+  <button onclick="voirTextContent()">Voir textContent</button>
+
+  <button onclick="changerContenu()">Changer contenu avec innerHTML</button>
+  <button onclick="changerAttribut()">Changer attribut (setAttribute)</button>
+
+  <br><br>
+  <img id="photo" src="https://via.placeholder.com/150" alt="Image de test">
+
+  <script>
+    function voirInnerText() {
+      alert(document.getElementById("demo").innerText);
+    }
+
+    function voirInnerHTML() {
+      alert(document.getElementById("demo").innerHTML);
+    }
+
+    function voirTextContent() {
+      alert(document.getElementById("demo").textContent);
+    }
+
+    function changerContenu() {
+      document.getElementById("demo").innerHTML = "<i>Salut <u>le monde</u> !</i>";
+    }
+
+    function changerAttribut() {
+      let img = document.getElementById("photo");
+      img.setAttribute("src", "https://via.placeholder.com/150/ff7f7f");
+      img.setAttribute("alt", "Nouvelle image rouge");
+      alert("Attributs changés !");
+    }
+  </script>
+
+</body>
+</html>

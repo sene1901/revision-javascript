@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculatrice avec Historique</title>
+  <style>
+    body { font-family: Arial; display: flex; justify-content: center; align-items: flex-start; padding: 50px; background: #f0f0f0; }
+    .calculator { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    .display { width: 240px; height: 50px; font-size: 24px; text-align: right; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background: #eee; }
+    .buttons { display: grid; grid-template-columns: repeat(4, 60px); grid-gap: 10px; }
+    button { padding: 15px; font-size: 18px; border: none; border-radius: 5px; cursor: pointer; background: #f5f5f5; transition: background 0.2s; }
+    button:hover { background: #ddd; }
+    .operator { background: #ff9500; color: #fff; }
+    .equal { background: #34c759; color: #fff; grid-column: span 2; }
+    .clear { background: #ff3b30; color: #fff; }
+    .history { margin-top: 20px; max-height: 150px; overflow-y: auto; background: #fafafa; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+    .history p { margin: 5px 0; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>Calculatrice</h2>
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="clear" id="clear">C</button>
+      <button class="operator" data-op="/">/</button>
+      <button class="operator" data-op="*">*</button>
+      <button class="operator" data-op="-">-</button>
+
+      <button class="number">7</button>
+      <button class="number">8</button>
+      <button class="number">9</button>
+      <button class="operator" data-op="+">+</button>
+
+      <button class="number">4</button>
+      <button class="number">5</button>
+      <button class="number">6</button>
+      <button class="equal" id="equal">=</button>
+
+      <button class="number">1</button>
+      <button class="number">2</button>
+      <button class="number">3</button>
+      <button class="number">0</button>
+    </div>
+
+    <div class="history" id="history">
+      <h3>Historique :</h3>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+    const buttons = document.querySelectorAll("button");
+    const historyDiv = document.getElementById("history");
+    
+    let currentInput = "";
+    let operator = "";
+    let previousInput = "";
+
+    // Charger historique depuis localStorage
+    let historique = JSON.parse(localStorage.getItem("calculs")) || [];
+    updateHistory();
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        if(button.classList.contains("number")) {
+          if(display.innerText === "0") {
+            display.innerText = button.innerText;
+          } else {
+            display.innerText += button.innerText;
+          }
+        } else if(button.classList.contains("operator")) {
+          operator = button.dataset.op;
+          previousInput = display.innerText;
+          display.innerText = "";
+        } else if(button.id === "equal") {
+          let result;
+          const n1 = parseFloat(previousInput);
+          const n2 = parseFloat(display.innerText);
+
+          switch(operator) {
+            case "+": result = n1 + n2; break;
+            case "-": result = n1 - n2; break;
+            case "*": result = n1 * n2; break;
+            case "/": result = n2 === 0 ? "Erreur" : n1 / n2; break;
+          }
+
+          display.innerText = result;
+
+          // Sauvegarder le calcul dans l'historique
+          const calcul = `${n1} ${operator} ${n2} = ${result}`;
+          historique.push(calcul);
+          localStorage.setItem("calculs", JSON.stringify(historique));
+          updateHistory();
+
+          previousInput = "";
+          operator = "";
+        } else if(button.id === "clear") {
+          display.innerText = "0";
+          previousInput = "";
+          operator = "";
+        }
+      });
+    });
+
+    function updateHistory() {
+      // Supprime les anciennes entrées sauf le titre
+      historyDiv.innerHTML = "<h3>Historique :</h3>";
+      // Affiche chaque calcul
+      historique.forEach(calc => {
+        const p = document.createElement("p");
+        p.innerText = calc;
+        historyDiv.appendChild(p);
+      });
+    }
+  </script>
+</body>
+</html>

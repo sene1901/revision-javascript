@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valider form</title>
+</head>
+<body>
+    <form >
+    <!-- champ nom -->
+    <label for="nom">Nom</label>
+    <input type="text" id="nom" name="nom" placeholder="Votre nom"><br>
+    <p id="message"></p>
+
+    <!-- champ email -->
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Votre email">
+
+    <!-- bouton de validation -->
+    <button>Envoyer</button>
+</form>
+    <script>
+const form = document.querySelector('form');
+
+// Ajout d'un écouteur d'événement sur le formulaire pour écouter le submit
+form.addEventListener("submit", (event) => {
+    // On empêche le comportement par défaut
+    event.preventDefault();
+
+    // On fait la vérification.
+    const baliseNom = document.getElementById('nom');
+    const valeurNom = baliseNom.value;
+    if (valeurNom === "") {
+        document.getElementById('message').innerHTML = 'Le champ nom est vide'
+        console.log('Le champ nom est vide');
+    } else {
+        console.log('Le champ nom est rempli');
+         document.getElementById('message').innerHTML = 'Le champ nom est rempli'
+    }
+});
+    </script>
+</body>
+</html>

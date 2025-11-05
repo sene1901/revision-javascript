@@ -1,0 +1,112 @@
+<!-- <!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcul d'âge</title>
+  <!-- ✅ Lien vers Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <style>
+    body {
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    fieldset {
+      border: 2px solid #7fa27f;
+      border-radius: 6px;
+      padding: 20px;
+      background-color: white;
+    }
+    legend {
+      font-weight: bold;
+      color: #4f6e4f;
+      width: auto;
+      padding: 0 10px;
+    }
+    input[readonly] {
+      background-color: #f1f1f1;
+    }
+    .btn-custom {
+      background-color: #7a9c7b;
+      color: white;
+    }
+    .btn-custom:hover {
+      background-color: #5c7d5d;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <fieldset class="mt-4">
+       
+            <legend>Calcul d'âge</legend>
+
+          <div class="mb-3">
+            <label for="dateNaissance" class="form-label">Date de naissance :</label>
+            <input type="date" id="dateNaissance" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <input type="button" value="Calculez votre âge" class="btn btn-custom w-100" onclick="calculerAge()">
+          </div>
+
+          <div class="mb-3">
+            <label for="age" class="form-label">Votre âge en ans :</label>
+            <input type="text" id="age" class="form-control" readonly>
+          </div>
+
+          <div class="mb-2">
+            <label for="ageComplet" class="form-label">Votre âge complet :</label>
+            <input type="text" id="ageComplet" class="form-control" readonly>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculerAge() {
+      const dateNaissance = document.getElementById('dateNaissance').value;
+      if (!dateNaissance) {
+        alert("Veuillez entrer votre date de naissance !");
+        return;
+      }
+
+      const naissance = new Date(dateNaissance);
+      const aujourdHui = new Date();
+
+      let ans = aujourdHui.getFullYear() - naissance.getFullYear();
+      let mois = aujourdHui.getMonth() - naissance.getMonth();
+      let jours = aujourdHui.getDate() - naissance.getDate();
+
+      // Ajustements si jour/mois non atteints
+      if (jours < 0) {
+        mois--;
+        const joursMoisPrecedent = new Date(aujourdHui.getFullYear(), aujourdHui.getMonth(), 0).getDate();
+        jours += joursMoisPrecedent;
+      }
+
+      if (mois < 0) {
+        ans--;
+        mois += 12;
+      }
+
+      // Affichage des résultats
+      document.getElementById("age").value = ans;
+
+      let texteAgeComplet = `${ans} an${ans > 1 ? 's' : ''}`;
+      if (mois > 0) texteAgeComplet += ` ${mois} mois`;
+      document.getElementById("ageComplet").value = texteAgeComplet;
+    }
+  </script>
+
+</body>
+</html>

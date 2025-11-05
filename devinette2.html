@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de devinette</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input { padding: 5px; width: 50px; }
+        button { padding: 5px 10px; margin-left: 10px; }
+        #message { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h2>Devine le nombre entre 1 et 10</h2>
+
+<input type="number" id="guess" min="1" max="10" />
+<button id="submit">Valider</button>
+
+<p id="message"></p>
+
+<script>
+const secret = Math.floor(Math.random() * 10) + 1;
+let essaisRestants = 3;
+
+const input = document.getElementById('guess');
+const button = document.getElementById('submit');
+const message = document.getElementById('message');
+
+button.addEventListener('click', () => {
+    const essai = parseInt(input.value);
+
+    if (isNaN(essai) || essai < 1 || essai > 10) {
+        message.textContent = "Merci de saisir un nombre entre 1 et 10 !";
+        return;
+    }
+
+    if (essai === secret) {
+        message.textContent = "Bravo  Tu as trouvé !";
+        button.disabled = true;
+    } else {
+        essaisRestants--;
+        if (essaisRestants === 0) {
+            message.textContent = ` Le nombre était ${secret}`;
+            button.disabled = true;
+        } else {
+            const indice = essai < secret ? "plus grand" : "plus petit";
+            message.textContent = `Raté  Essaie un nombre ${indice}. Il te reste ${essaisRestants} essais.`;
+        }
+    }
+
+    input.value = '';
+    input.focus();
+});
+</script>
+
+</body>
+</html>

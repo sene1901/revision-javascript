@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> differents inputs</title>
+</head>
+<body>
+    <!-- champs input text -->
+<label for="nom">nom</label>
+<input type="text" id="nom" name="nom" value="sadio" ><br>
+<!-- checkbox -->
+ <label>Acceptez vous les conditions : </label>
+ <input type="checkbox" id="conditions" name="conditions"  checked> <br>
+<!-- radio input  -->
+<input type="radio" id="fr" name="france" value="France" checked>
+<label for="france">France</label>
+<input type="radio" id="eu" name="eu" value="eu">
+<label for="eu">Europe</label>
+<input type="radio" id="hors-eu" name="hors-eu" value="hors-eu">
+<label for="hors-eu">Hors Europe</label>
+<script>
+    let nom = document.getElementById("nom")
+    console.log(nom.value)
+    let conditions = document.getElementById('conditions')
+    console.log(conditions.checked)
+    let listeBtnRadio = document.querySelectorAll("input[type=radio]")
+    for(let i = 0 ; i < listeBtnRadio.length ; i++){
+        if(listeBtnRadio[i].checked){
+            console.log(listeBtnRadio[i].value)
+        }
+        
+    }
+</script>
+</body>
+</html>

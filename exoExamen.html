@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Système de notes</title>
+</head>
+<body>
+  <h2>Exercice : Système de notes</h2>
+  <p id="resultat"></p>
+
+  <script>
+    const notes = [];
+
+    for (let i = 0; i < 5; i++) {
+      const saisie = prompt(`Entrez la note  (sur 20) :`);
+      const note = parseFloat(saisie);
+
+      if (isNaN(note) || note < 0 || note > 20) {
+        alert("Veuillez entrer un nombre entre 0 et 20 !");
+        i--; 
+        continue;
+      }
+
+      notes.push(note);
+    }
+
+    const somme = notes.reduce((acc, val) => acc + val, 0);
+    const moyenne = somme / notes.length;
+
+
+    let message = "";
+    if (moyenne >= 10) {
+      message = `Moyenne : ${moyenne.toFixed(2)} => Admis `;
+    } else if (moyenne >= 8) {
+      message = `Moyenne : ${moyenne.toFixed(2)} => Rattrapage `;
+    } else {
+      message = `Moyenne : ${moyenne.toFixed(2)} => Échec `;
+    }
+
+    document.getElementById("resultat").innerHTML = message;
+  </script>
+</body>
+</html>

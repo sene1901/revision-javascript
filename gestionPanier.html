@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion du panier d'achat</title>
+</head>
+<body>
+  <h2>Exercice 1 : Gestion d’un panier d’achat</h2>
+
+  <button onclick="ajouterProduit('Chaussures', 5000, 1)">Ajouter Chaussures</button>
+  <button onclick="ajouterProduit('T-shirt', 2500, 2)">Ajouter T-shirt</button>
+  <button onclick="ajouterProduit('Sac', 3000, 1)">Ajouter Sac</button>
+
+  <h3 id="resultat">Le total du panier est de : 0 XOF</h3>
+
+  <script>
+    // Tableau qui contiendra les produits
+    const panier = [];
+
+    // Fonction pour ajouter un produit au panier
+    function ajouterProduit(nom, prix, quantite) {
+      panier.push({ nom, prix, quantite });
+      calculerTotal();
+    }
+
+    // Fonction pour calculer le total du panier
+    function calculerTotal() {
+      let total = 0;
+
+      for (let i = 0; i < panier.length; i++) {
+        total += panier[i].prix * panier[i].quantite;
+      }
+
+      document.getElementById("resultat").innerText =
+        `Le total du panier est de : ${total} XOF`;
+    }
+  </script>
+</body>
+</html>
