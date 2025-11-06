@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeu du nombre mystère</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 30px; }
+    input { padding: 5px; width: 150px; }
+    button { padding: 5px 10px; margin-left: 5px; }
+    #message { margin-top: 20px; font-size: 1.2em; }
+  </style>
+</head>
+<body>
+
+  <h2> Devine le nombre mystère (entre 1 et 100)</h2>
+
+  <input type="number" id="userNumber" placeholder="Votre nombre">
+  <button id="checkBtn">Vérifier</button>
+
+  <p id="message"></p>
+
+  <script>
+    // 1 Générer un nombre aléatoire entre 1 et 100
+    const NOMBRECIBLE = Math.floor(Math.random() * 100) + 1;
+    console.log(" Nombre à deviner :", NOMBRECIBLE); // pour test
+
+    const input = document.getElementById("userNumber");
+    const message = document.getElementById("message");
+    const btn = document.getElementById("checkBtn");
+
+    // 2 Ajouter un écouteur d’événement au clic
+    btn.addEventListener("click", () => {
+      const valeur = parseInt(input.value); // récupérer le nombre
+
+      if (isNaN(valeur)) {
+        message.textContent = " Entrez un nombre valide !";
+        return;
+      }
+
+      // 3 Comparer avec le nombre cible
+      if (valeur > NOMBRECIBLE) {
+        message.textContent = " Trop grand ! Essayez plus petit.";
+      } else if (valeur < NOMBRECIBLE) {
+        message.textContent = " Trop petit ! Essayez plus grand.";
+      } else {
+        message.textContent = " Gagné ! Bravo ";
+        message.style.color = "green";
+      }
+
+      // Effacer le champ après chaque tentative
+      input.value = "";
+      input.focus();
+    });
+  </script>
+</body>
+</html>

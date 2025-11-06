@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter une image</title>
+  <style>
+    img {
+      max-width: 300px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h2>Ajouter une image à la page</h2>
+
+  <input type="text" id="imageUrl" placeholder="Entrez l'URL de l'image" style="width: 300px;">
+  <button id="addBtn">Ajouter l'image</button>
+
+  <div id="imageContainer"></div> <!-- conteneur pour les images -->
+
+  <script>
+    // Sélectionner le bouton et le conteneur
+    const addBtn = document.getElementById("addBtn");
+    const imageContainer = document.getElementById("imageContainer");
+
+    // Ajouter un événement au clic sur le bouton
+    addBtn.addEventListener("click", () => {
+      const url = document.getElementById("imageUrl").value.trim();
+
+      if (url === "") {
+        alert("Veuillez entrer l'URL d'une image !");
+        return;
+      }
+
+      // Créer un nouvel élément <img>
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "Image ajoutée par l'utilisateur";
+
+      // Ajouter l'image au conteneur
+      imageContainer.appendChild(img);
+
+      // Vider le champ texte
+      document.getElementById("imageUrl").value = "";
+    });
+  </script>
+</body>
+</html>

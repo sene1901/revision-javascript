@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date complète</title>
+</head>
+<body>
+  <h1>Date du jour :</h1>
+  <p id="dateComplete"></p> <!-- Ici on affichera la date -->
+
+  <script>
+    // Tableau des noms des mois
+    const mois = [
+      "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+      "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ];
+
+    // Récupérer la date actuelle
+    const today = new Date();
+    const jour = today.getDate();       // jour du mois (1-31)
+    const indexMois = today.getMonth(); // mois (0-11)
+    const annee = today.getFullYear();  // année (ex: 2025)
+
+    // Afficher la date complète dans le <p>
+    document.getElementById("dateComplete").textContent = 
+      `${jour} ${mois[indexMois]} ${annee}`;
+  </script>
+</body>
+</html>

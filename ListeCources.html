@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste de courses</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input { padding: 5px; width: 250px; }
+    button { padding: 5px 10px; }
+    li { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h2>Ma Liste de Courses 🛒</h2>
+
+  <input type="text" id="itemInput" placeholder="Entrez un article">
+  <button id="addBtn">Ajouter</button>
+
+  <ul id="shoppingList"></ul>
+
+  <script>
+    const addBtn = document.getElementById("addBtn");
+    const input = document.getElementById("itemInput");
+    const list = document.getElementById("shoppingList");
+
+    addBtn.addEventListener("click", () => {
+      const value = input.value.trim(); // Récupérer et nettoyer le texte
+
+      if (value === "") {
+        // Si le champ est vide, ne rien faire
+        return;
+      }
+
+      // Créer un nouvel élément de liste
+      const li = document.createElement("li");
+      li.textContent = value;
+
+      // Ajouter l'élément à la liste
+      list.appendChild(li);
+
+      // Vider le champ de texte
+      input.value = "";
+    });
+
+    // Optionnel : permettre l'ajout avec la touche Entrée
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        addBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>

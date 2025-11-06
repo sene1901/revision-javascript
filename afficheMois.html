@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mois courant</title>
+</head>
+<body>
+  <h1>Mois courant :</h1>
+  <p id="moisCourant"></p> <!-- Ici on affichera le mois -->
+
+  <script>
+    // Tableau des noms des mois
+    const mois = [
+      "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+      "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ];
+
+    // Récupérer le mois courant
+    const indexMois = (new Date()).getMonth();
+
+    // Sélectionner l'élément <p> et afficher le nom du mois
+    document.getElementById("moisCourant").textContent = mois[indexMois];
+    console.log("Mois courant :", mois[indexMois]);
+  </script>
+</body>
+</html>
