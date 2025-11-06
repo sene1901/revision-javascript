@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Laboratoire de chaînes de caractères</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      color: #222;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #3b82f6;
+    }
+    section {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 15px auto;
+      max-width: 600px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input {
+      padding: 8px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 8px 15px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    p {
+      font-weight: bold;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧩 Laboratoire de chaînes de caractères</h1>
+
+  <!-- Exercice 1 -->
+  <section>
+    <h3>1️⃣ Longueur d’une chaîne</h3>
+    <input type="text" id="chaine1" placeholder="Entrez un texte">
+    <button onclick="longueurChaine()">Tester</button>
+    <p id="res1"></p>
+  </section>
+
+  <!-- Exercice 2 -->
+  <section>
+    <h3>2️⃣ Première et dernière lettre</h3>
+    <input type="text" id="chaine2" placeholder="Entrez un mot">
+    <button onclick="premiereEtDerniereLettre()">Tester</button>
+    <p id="res2"></p>
+  </section>
+
+  <!-- Exercice 3 -->
+  <section>
+    <h3>3️⃣ Tout en majuscule et en minuscule</h3>
+    <input type="text" id="chaine3" placeholder="Entrez un mot">
+    <button onclick="changerCasse()">Changer la casse</button>
+    <p id="res3"></p>
+  </section>
+
+  <!-- Exercice 4 -->
+  <section>
+    <h3>4️⃣ Compter les voyelles</h3>
+    <input type="text" id="chaine4" placeholder="Entrez un mot">
+    <button onclick="compterVoyelles()">Compter</button>
+    <p id="res4"></p>
+  </section>
+
+  <!-- Exercice 5 -->
+  <section>
+    <h3>5️⃣ Inverser la chaîne</h3>
+    <input type="text" id="chaine5" placeholder="Entrez un mot">
+    <button onclick="inverserChaine()">Inverser</button>
+    <p id="res5"></p>
+  </section>
+
+  <!-- Exercice 6 -->
+  <section>
+    <h3>6️⃣ Vérifier un palindrome</h3>
+    <input type="text" id="chaine6" placeholder="Ex: radar">
+    <button onclick="estPalindrome()">Vérifier</button>
+    <p id="res6"></p>
+  </section>
+
+  <!-- Exercice 7 -->
+  <section>
+    <h3>7️⃣ Supprimer les espaces</h3>
+    <input type="text" id="chaine7" placeholder="Ex: bon jour js">
+    <button onclick="supprimerEspaces()">Supprimer</button>
+    <p id="res7"></p>
+  </section>
+
+  <!-- Exercice 8 -->
+  <section>
+    <h3>8️⃣ Contient une lettre ?</h3>
+    <input type="text" id="chaine8" placeholder="Ex: ordinateur">
+    <input type="text" id="lettre8" placeholder="Lettre à chercher">
+    <button onclick="contientLettre()">Vérifier</button>
+    <p id="res8"></p>
+  </section>
+
+  <!-- Exercice 9 -->
+  <section>
+    <h3>9️⃣ Compter les majuscules</h3>
+    <input type="text" id="chaine9" placeholder="Ex: BonJourJS">
+    <button onclick="compterMajuscules()">Compter</button>
+    <p id="res9"></p>
+  </section>
+
+  <!-- Exercice 10 -->
+  <section>
+    <h3>🔟 Vérifier mot de passe</h3>
+    <input type="text" id="chaine10" placeholder="Ex: Test1234">
+    <button onclick="verifierMotDePasse()">Vérifier</button>
+    <p id="res10"></p>
+  </section>
+
+  <script>
+    // 1️⃣ Longueur
+    function longueurChaine() {
+      const ch = document.getElementById("chaine1").value;
+      document.getElementById("res1").textContent = `Longueur : ${ch.length}`;
+    }
+
+    // 2️⃣ Première et dernière lettre
+    function premiereEtDerniereLettre() {
+      const ch = document.getElementById("chaine2").value;
+      if (ch.length === 0) return document.getElementById("res2").textContent = "Veuillez entrer un texte.";
+      const resultat = `Première : ${ch.charAt(0)} / Dernière : ${ch.charAt(ch.length - 1)}`;
+      document.getElementById("res2").textContent = resultat;
+    }
+
+    // 3️⃣ Majuscules et minuscules
+    function changerCasse() {
+      const ch = document.getElementById("chaine3").value;
+      document.getElementById("res3").innerHTML = `
+        MAJUSCULE : ${ch.toUpperCase()} <br>
+        minuscule : ${ch.toLowerCase()}
+      `;
+    }
+
+    // 4️⃣ Compter les voyelles
+    function compterVoyelles() {
+      const ch = document.getElementById("chaine4").value.toLowerCase();
+      const voyelles = ch.match(/[aeiouy]/g);
+      const total = voyelles ? voyelles.length : 0;
+      document.getElementById("res4").textContent = `Nombre de voyelles : ${total}`;
+    }
+
+    // 5️⃣ Inverser
+    function inverserChaine() {
+      const ch = document.getElementById("chaine5").value;
+      document.getElementById("res5").textContent = `Inversé : ${ch.split('').reverse().join('')}`;
+    }
+
+    // 6️⃣ Palindrome
+    function estPalindrome() {
+      const ch = document.getElementById("chaine6").value.toLowerCase().replace(/\s+/g, '');
+      const inverse = ch.split('').reverse().join('');
+      document.getElementById("res6").textContent = ch === inverse ? "✅ C'est un palindrome" : "❌ Ce n'est pas un palindrome";
+    }
+
+    // 7️⃣ Supprimer espaces
+    function supprimerEspaces() {
+      const ch = document.getElementById("chaine7").value;
+      document.getElementById("res7").textContent = `Résultat : ${ch.replace(/\s+/g, '')}`;
+    }
+
+    // 8️⃣ Contient une lettre
+    function contientLettre() {
+      const ch = document.getElementById("chaine8").value;
+      const lettre = document.getElementById("lettre8").value;
+      const contient = ch.includes(lettre);
+      document.getElementById("res8").textContent = contient ? "✅ Oui" : "❌ Non";
+    }
+
+    // 9️⃣ Compter majuscules
+    function compterMajuscules() {
+      const ch = document.getElementById("chaine9").value;
+      const maj = ch.match(/[A-Z]/g);
+      document.getElementById("res9").textContent = `Nombre de majuscules : ${maj ? maj.length : 0}`;
+    }
+
+    // 🔟 Vérifier mot de passe
+    function verifierMotDePasse() {
+      const mdp = document.getElementById("chaine10").value;
+      const maj = /[A-Z]/.test(mdp);
+      const chiffre = /\d/.test(mdp);
+      const long = mdp.length >= 8;
+
+      const valid = maj && chiffre && long;
+      document.getElementById("res10").textContent = valid ? "✅ Mot de passe valide" : "❌ Mot de passe invalide";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion des étudiants</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2563eb;
+    }
+    section {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 15px auto;
+      max-width: 700px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input {
+      padding: 5px;
+      margin: 3px;
+    }
+    button {
+      padding: 5px 10px;
+      margin: 5px 0;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1d4ed8;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 5px;
+      text-align: center;
+    }
+    th {
+      background-color: #3b82f6;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gestion des étudiants</h1>
+
+  <!-- Ajouter un étudiant -->
+  <section>
+    <h3>Ajouter un étudiant</h3>
+    <input type="text" id="prenom" placeholder="Prénom">
+    <input type="text" id="nom" placeholder="Nom">
+    <input type="number" id="age" placeholder="Age">
+    <input type="text" id="notes" placeholder="Notes séparées par des virgules">
+    <button onclick="ajouterEtudiant()">Ajouter</button>
+  </section>
+
+  <!-- Boutons d'opérations -->
+  <section>
+    <button onclick="afficherEtudiants()">Afficher tous les étudiants</button>
+    <button onclick="trierParNom()">Trier par nom</button>
+    <button onclick="filtrerPlusDe18()">Filtrer > 18 ans</button>
+  </section>
+
+  <!-- Tableau d'affichage -->
+  <section>
+    <h3>Liste des étudiants</h3>
+    <table id="tableEtudiants">
+      <thead>
+        <tr>
+          <th>Prénom</th>
+          <th>Nom</th>
+          <th>Age</th>
+          <th>Notes</th>
+          <th>Somme des notes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <script src="tableauetudDom.js">
+   
+  </script>
+
+</body>
+</html>

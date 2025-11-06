@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Vérification de chaîne</title>
+</head>
+<body>
+  <h2>Exercice sur les chaînes de caractères</h2>
+  <input type="text" id="texte" placeholder="Entrez une chaîne">
+  <button onclick="testerChaine()">Tester</button>
+
+  <p id="result1"></p>
+  <p id="result2"></p>
+  <p id="result3"></p>
+  <p id="result4"></p>
+
+  <script>
+    // 1 Vérifie si la chaîne commence par a-d / A-D
+    function commenceParLettreAD(chaine) {
+      return /^[a-dA-D]/.test(chaine);
+    }
+
+    // 2 Vérifie s’il y a un seul '@'
+    function contientUnSeulArobase(chaine) {
+      return chaine.split('@').length - 1 === 1;
+    }
+
+    // 3 Vérifie s’il y a au moins un chiffre
+    function contientChiffre(chaine) {
+      return /\d/.test(chaine);
+    }
+
+    // 4 Remplace tous les chiffres par '*'
+    function remplacerChiffre(chaine) {
+      return chaine.replace(/\d/g, '*');
+    }
+
+    // 5 Fonction principale appelée au clic du bouton
+    function testerChaine() {
+      const texte = document.getElementById("texte").value;
+
+      document.getElementById("result1").innerText =
+        "1 Commence par a-d ou A-D : " + commenceParLettreAD(texte);
+
+      document.getElementById("result2").innerText =
+        "2 Contient un seul @ : " + contientUnSeulArobase(texte);
+
+      document.getElementById("result3").innerText =
+        "3 Contient au moins un chiffre : " + contientChiffre(texte);
+
+      document.getElementById("result4").innerText =
+        "4 Chaîne avec chiffres remplacés : " + remplacerChiffre(texte);
+    }
+  </script>
+</body>
+</html>
